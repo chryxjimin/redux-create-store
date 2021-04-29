@@ -41,5 +41,6 @@ button.addEventListener('click', function() {
 })
 
 
+
 let store = createStore(reducer);
 store.dispatch({ type: '@@INIT' }); 
