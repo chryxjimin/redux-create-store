@@ -10,19 +10,36 @@ function reducer(state = { count: 0 }, action) {
   }
 };
 
-function dispatch(action){
-  state = reducer(state, action);
-  render();
-};
+function createStore(reducer) {
+  let state;
+
+  function dispatch(action){
+    state = reducer(state, action);
+    render();
+  };
+
+  function getState() {
+    return state;
+  }
+
+  return { 
+    dispatch, 
+    getState
+  };
+}
+
 
 function render() {
   let container = document.getElementById('container');
-  container.textContent = state.count;
+  container.textContent = store.getState().count;
 };
 
-dispatch({ type: '@@INIT' })
 let button = document.getElementById('button');
 
 button.addEventListener('click', function() {
-    dispatch({ type: 'INCREASE_COUNT' });
+    store.dispatch({ type: 'INCREASE_COUNT' });
 })
+
+
+let store = createStore(reducer);
+store.dispatch({ type: '@@INIT' }); 
